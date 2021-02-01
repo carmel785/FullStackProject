@@ -1,2 +1,2 @@
 # FullStackProject
-Server side and Client side project
+Server side(Node js) and Client side(React) project

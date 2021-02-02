@@ -15,10 +15,62 @@ import {UserContext} from './UserContext'
         if(location.state !== undefined) // if the the EditUser componnent change the user values so change the users array state.
         {
             console.log("users location: "+location.state.fname)
-            
+            var permissionsArr = makePremissionsText(location.state)
+            console.log(permissionsArr)
         }
     },[])
 
+    //making premissions array from all the data it get 
+    function makePremissionsText(data)
+    {
+        var arr = []
+        let subscriptionsFlag = false
+        let moviesFlag = false
+       
+        if(data.createS === true)
+        {
+            subscriptionsFlag = true
+            arr.push("Create Subscriptions")
+        }
+        if(data.deleteS === true)
+        {
+            subscriptionsFlag = true
+            arr.push("Delete Subscriptions")
+        }
+        if(data.updateS === true)
+        {
+            subscriptionsFlag = true
+            arr.push("Update Subscription")
+        }
+       
+        if(data.createM === true)
+        {
+            moviesFlag = true
+            arr.push("Create Movies")
+        }
+        if(data.deleteM === true)
+        {
+            moviesFlag = true
+            arr.push("Delete Movies")
+        }
+        if(data.updateM === true)
+        {
+            moviesFlag = true
+            arr.push("Update Movie")
+        }
+
+        if(subscriptionsFlag === true )
+        {
+            arr.push("View Subscriptions")
+        }
+        if(moviesFlag === true)
+        {
+            arr.push("View Movies")
+        }
+        // var arr = [viewS,createS,deleteS,updateS, viewM, createM, deleteM, updateM]
+        return arr
+    }
+ 
 
     axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
         .then(x=>{setUsers(x.data)})

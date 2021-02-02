@@ -25,13 +25,13 @@ const EditUser = () =>
 
 
     function subFunc(checked) {
-        if(checked == true)
+        if(checked === true)
         {
             checkboxSub.current.checked = true
         }
     }
     function movFunc(checked) {
-        if(checked == true)
+        if(checked === true)
         {
             checkboxMov.current.checked = true
         }
@@ -44,10 +44,10 @@ const EditUser = () =>
     }
 
     return(
-    <div class="w3-container">
+    <div className="w3-container">
     <h1>Users</h1>
     <h2>Edit User: {name}</h2>
-        <div class="w3-blue w3-padding-32 w3-bordered w3-code">
+        <div className ="w3-blue w3-padding-32 w3-bordered w3-code">
             <form onSubmit = {handleSubmit(onSubmit)}>
                 First Name: <input type = "text" name= "fname" ref = {register}/><br/>
                 Last Name: <input type = "text" name= "lname" ref = {register} /><br/>

@@ -13,8 +13,8 @@ const CreateAccount  = () =>
     {
         let users = await axios.get('http://localhost:4000/routingToFront/UsersDB')
         // users.data.forEach(x=> console.log(x.userName))
-        var userData = users.data.filter(u => u.User == data.user)
-        if(userData == "")
+        var userData = users.data.filter(u => u.User === data.user)
+        if(userData === "")
         {
             console.log("this user is not exiest")
             history.push("/noUser");
@@ -23,14 +23,14 @@ const CreateAccount  = () =>
         {
             userData.forEach(x=>
                 {
-                    if(x.Password == "")
+                    if(x.Password === "")
                     {
                         let user = {_id: x._id , User : x.User , Password : data.pwd}
                         axios.put('http://localhost:4000/routingToFront/UsersDB/:'+x._id, user)
                             .then(resp => console.log(resp.data))
                         history.push("/");
                     }
-                    else if(x.Password == data.pwd)
+                    else if(x.Password === data.pwd)
                     {
                         console.log("this user found in the DataBase, redirecting to Login Page..")
                         history.push("/");

@@ -19,9 +19,9 @@ const ManageUsers  = () =>
     
     return(
         <div>
-        <ul class="w3-bar w3-black">
-            <li class="w3-bar-item w3-button tablink"><Link to = "/main/manageUsers/users">Users</Link></li>
-            <li class="w3-bar-item w3-button tablink"><Link to = "/main/manageUsers/addUser" >AddUser</Link></li>
+        <ul className="w3-bar w3-black">
+            <li className="w3-bar-item w3-button tablink"><Link to = "/main/manageUsers/users">Users</Link></li>
+            <li className="w3-bar-item w3-button tablink"><Link to = "/main/manageUsers/addUser" >AddUser</Link></li>
         </ul>
         
         <Switch>

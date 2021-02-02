@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useContext, useEffect} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {UserContext} from './UserContext'
 
  function Users()
@@ -8,11 +8,17 @@ import {UserContext} from './UserContext'
     const [users, setUsers] = useState([])
     let history = useHistory();
     const context = useContext(UserContext)
-    
+    let location = useLocation()
     // avoiding infinite loop
     useEffect(()=> {
         console.log("User: "+context)
+        if(location.state !== undefined) // if the the EditUser componnent change the user values so change the users array state.
+        {
+            console.log("users location: "+location.state.fname)
+            
+        }
     },[])
+
 
     axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
         .then(x=>{setUsers(x.data)})

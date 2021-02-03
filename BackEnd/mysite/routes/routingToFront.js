@@ -17,13 +17,12 @@ router.get('/UsersDBFullData',async function(req, res, next) {
   var usersDB = await usersBl.getAllUserDetails()
   res.send(usersDB)
 });
-//update(PUT) the users DB
+//update(PUT) the users DB and jsons
 router.put('/UsersDB/:id',async function(req, res, next) {
-  console.log(req.body)
+  res.send(req.body)
   // console.log(req.params.id)
   usersBl.updateUser(req.body)
 });
-
 
 //pass Permissions Json to FrontEnd
 router.get('/PermissionsJson',async function(req, res, next) {
@@ -36,6 +35,7 @@ router.get('/UsersJson',async function(req, res, next) {
   var UsersJson = await usersDal.readFile()
   res.send(UsersJson)
 });
+
 
 //////////////////////////////////////////////////////////////////
 //* DATA BASE FROM SUBSCRIPTIONS WS:

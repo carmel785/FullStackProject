@@ -27,7 +27,7 @@ const ManageUsers  = () =>
         <Switch>
             <Route path = "/main/manageUsers/users/" component = {Users}/>
             <Route path = "/main/manageUsers/addUser/" component = {AddUser}/>
-            <Route path = "/main/manageUsers/EditUser/:name" component = {EditUser}/>
+            <Route path = "/main/manageUsers/EditUser/:name/:userName" component = {EditUser}/>
             
         </Switch>
 

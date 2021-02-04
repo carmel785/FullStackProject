@@ -58,9 +58,19 @@ function Users()
     .then(x=>{setUsers(x.data)})
 
     const editClick = (name,userName) =>
-    {
+    {//update user
         console.log(name)
         history.push("/main/manageUsers/EditUser/"+name+"/"+userName);
+    }
+
+    
+    const deleteClick = (userName) =>
+    {//delete user
+        axios.get('http://localhost:4000/routingToFront/deleteUser/'+userName)
+        .then(x=> console.log(x))
+
+        axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+        .then(x=>{setUsers(x.data)})
     }
 
     let items = users.map((item,index) => {
@@ -71,7 +81,7 @@ function Users()
             Created Date: {item.created_date}<br/>
             Permissions: {item.permissions.join(",")}<br/><br/>
             <input class = "w3-sans-serif" type = "button" value = "Edit" onClick = {()=> editClick(item.fullName,item.userName)} />
-            <input class = "w3-sans-serif" type = "button" value = "Delete" />
+            <input class = "w3-sans-serif" type = "button" value = "Delete" onClick = {()=>deleteClick(item.userName) }/>
 
         </div>
     })    

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {useRef, useContext, useEffect, useState} from 'react';
 import {
     BrowserRouter as Router,

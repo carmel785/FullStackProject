@@ -24,6 +24,24 @@ router.put('/UsersDB/:id',async function(req, res, next) {
   usersBl.updateUser(req.body)
 });
 
+//delete user in Json and data base
+router.get('/deleteUser/:user',async function(req, res, next) {
+  await usersBl.deleteUser(req.params.user)
+  res.send("user: "+req.params.user+" deleted")
+});
+
+//create new user data base and Json
+router.post('/createUser',async function(req, res, next) {
+  await usersBl.addUser(req.body)
+  res.send("user: "+req.body.user+" created")
+});
+
+//pass Permissions Json to FrontEnd
+router.get('/PermissionsJson',async function(req, res, next) {
+  var permissionsJson = await permissionsDal.readFile()
+  res.send(permissionsJson)
+});
+
 //pass Permissions Json to FrontEnd
 router.get('/PermissionsJson',async function(req, res, next) {
   var permissionsJson = await permissionsDal.readFile()

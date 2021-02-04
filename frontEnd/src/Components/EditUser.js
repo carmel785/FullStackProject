@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {useRef, useContext, useEffect} from 'react';
+import {useRef, useContext, useEffect, useState} from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,26 +11,32 @@ import {UserContext} from './UserContext'
 
 const EditUser = () =>
 {
-    const {name} = useParams()
+    const {name,userName} = useParams()
     const checkboxSub = useRef(null);
     const checkboxMov = useRef(null);
     let history = useHistory();
+    const [date, setDate] = useState("")
     const { register , handleSubmit, errors } = useForm(); // initialize the hook
     const context = useContext(UserContext)
 
     useEffect(()=> {
         console.log("EditUser: "+context)
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
+        setDate(dd+"/"+mm+"/"+yyyy)
     },[])
 
 
     function subFunc(checked) {
-        if(checked == true)
+        if(checked === true)
         {
             checkboxSub.current.checked = true
         }
     }
     function movFunc(checked) {
-        if(checked == true)
+        if(checked === true)
         {
             checkboxMov.current.checked = true
         }
@@ -39,21 +44,34 @@ const EditUser = () =>
 
     const onSubmit = (data) =>
     {
-        console.log(data)
-        history.push({pathname: "/main/manageUsers/users",state: data})
+        let newArr = {
+            prevUser: userName,
+            fname: data.fname,
+            lname: data.lname,
+            user: data.user,
+            sessionTimeOut: data.sessionTimeOut,
+            createM: data.createM,
+            createS: data.createS,
+            deleteM: data.deleteM,
+            deleteS: data.deleteS,
+            updateM: data.updateM,
+            updateS: data.updateS,
+            // created_date: date
+        }
+        history.push({pathname: "/main/manageUsers/users",state: newArr})
     }
 
     return(
-    <div class="w3-container">
+    <div className="w3-container">
     <h1>Users</h1>
     <h2>Edit User: {name}</h2>
-        <div class="w3-blue w3-padding-32 w3-bordered w3-code">
+        <div className ="w3-blue w3-padding-32 w3-bordered w3-code">
             <form onSubmit = {handleSubmit(onSubmit)}>
                 First Name: <input type = "text" name= "fname" ref = {register}/><br/>
                 Last Name: <input type = "text" name= "lname" ref = {register} /><br/>
                 User Name: <input type = "text" name= "user" ref = {register}/><br/>
                 Session Time Out(Minutes): <input type = "text" name= "sessionTimeOut" ref = {register}/><br/>
-                Created Date: <input type = "date" name= "createdDate" ref = {register}/><br/>
+                Created Date: {date} <br/>
                 Permissons : <br/>
                 <input type = "checkbox" name = "ViewS" id = "ViewS" ref={checkboxSub} /> View Subscriptions <br/>
                 <input type = "checkbox" name = "createS" id = "createS" ref = {register} onChange= {(e)=> subFunc(e.target.checked)}/> Create Subscriptions <br/> 

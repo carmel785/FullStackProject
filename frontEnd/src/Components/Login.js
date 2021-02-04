@@ -11,8 +11,8 @@ const Login  = () =>
     const onSubmit = async (data) =>
     {
       let users = await axios.get('http://localhost:4000/routingToFront/UsersDB')
-        var userData = users.data.filter(u => u.User == data.user)
-        if(userData == "")
+        var userData = users.data.filter(u => u.User === data.user)
+        if(userData === "")
         {
             console.log("this user is not exiest")
             history.push("/noUser");
@@ -20,7 +20,7 @@ const Login  = () =>
         else
         {
           userData.forEach(x=> {
-            if(x.Password == data.pwd)
+            if(x.Password === data.pwd)
             {
               console.log("Loggin in..")
               history.push({pathname: "/main",state: x.User});

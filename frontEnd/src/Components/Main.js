@@ -22,11 +22,11 @@ const Main  = () =>
 
     return(
         <div>
-        <ul class="w3-bar w3-blue">
-            <li class="w3-bar-item w3-button tablink"><Link to = "/main/movies" >Movies</Link></li>
-            <li class="w3-bar-item w3-button tablink"><Link to = "/main/subscriptions" >Subscriptions</Link></li>
-            <li class="w3-bar-item w3-button tablink"><Link to= "/main/manageUsers">Users Management</Link></li>
-            <li class="w3-bar-item w3-button tablink"><Link to = "/" >Log Out</Link></li>
+        <ul className="w3-bar w3-blue">
+            <li className="w3-bar-item w3-button tablink"><Link to = "/main/movies" >Movies</Link></li>
+            <li className="w3-bar-item w3-button tablink"><Link to = "/main/subscriptions" >Subscriptions</Link></li>
+            <li className="w3-bar-item w3-button tablink"><Link to= "/main/manageUsers">Users Management</Link></li>
+            <li className="w3-bar-item w3-button tablink"><Link to = "/" >Log Out</Link></li>
         </ul>
 
         <UserContext.Provider value = {user}> 

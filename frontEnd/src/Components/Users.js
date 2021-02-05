@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState, useContext, useEffect} from 'react';
 import { useHistory, useLocation } from "react-router-dom";
-import {UserContext} from './UserContext'
+import {UserContext} from './Contexts'
 
 function Users()
 {

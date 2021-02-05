@@ -6,8 +6,10 @@ import Login from './Login'
 // import '../App.css'
 import '../w3.css'
 import {BrowserRouter as Router, Link , Switch, Route, useLocation} from 'react-router-dom'
-import {UserContext} from './UserContext'
-import {useEffect, useState} from 'react'
+import {UserContext} from './Contexts'
+import {AdminContext} from './Contexts'
+import {useEffect, useState, UseContext} from 'react'
+
 
 const Main  = () =>
 {
@@ -16,6 +18,7 @@ const Main  = () =>
     useEffect(() => { 
         console.log("main: "+location.state)
         setUser(location.state) // save the user from location to state
+        
       }, []);
 
       //passing the state with context api to all tabs

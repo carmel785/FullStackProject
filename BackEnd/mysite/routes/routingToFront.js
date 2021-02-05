@@ -4,6 +4,7 @@ var indexBl = require('../bl/indexBl')
 var usersBl = require('../bl/usersBl')
 var usersDal = require('../dals/usersDal')
 var permissionsDal = require('../dals/permissionsDal')
+var adminDal = require('../dals/AdminDal')
 var axios = require('axios')
 //* DATA BASE FROM CINEMA WS:
 
@@ -52,6 +53,12 @@ router.get('/PermissionsJson',async function(req, res, next) {
 router.get('/UsersJson',async function(req, res, next) {
   var UsersJson = await usersDal.readFile()
   res.send(UsersJson)
+});
+
+//pass Admin Json to FrontEnd
+router.get('/AdminJson',async function(req, res, next) {
+  var AdminJson = await adminDal.readFile()
+  res.send(AdminJson)
 });
 
 

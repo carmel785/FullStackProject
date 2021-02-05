@@ -3,7 +3,7 @@ import Users from './Users'
 import AddUser from './AddUser'
 import EditUser from './EditUser'
 import {useContext, useEffect} from 'react'
-import {UserContext} from './UserContext'
+import {UserContext} from './Contexts'
 // import '../App.css'
 import '../w3.css'
 
@@ -11,11 +11,10 @@ const ManageUsers  = () =>
 {
     const context = useContext(UserContext)
 
-    // useEffect(() => {
-    // // console.log("manager: "+context)
+    useEffect(() => {
+        console.log("manager: "+context)
 
-    //   },[]);
-      console.log("manager: "+context)
+      },[]);
     
     return(
         <div>

@@ -3,9 +3,12 @@ import {useContext, useEffect} from 'react'
 
 const Subscriptions  = () =>
 {
-
     const context = useContext(UserContext)
-    console.log("Subscriptions: "+context)
+    
+    useEffect(() => {
+        console.log("Subscriptions: "+context)
+
+      },[]);
 
     return(
        <div>

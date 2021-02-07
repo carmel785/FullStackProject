@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {useRef, useContext, useEffect, useState} from 'react';
+import {useRef, useContext, useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import {UserContext} from './Contexts'
@@ -30,7 +30,7 @@ const AddUser  = () =>
         }
     }
 
-    const onSubmit = (data) =>
+    const onSubmit = async (data) =>
     {
         let newArr = {
             fname: data.fname,
@@ -46,7 +46,14 @@ const AddUser  = () =>
         }
 
         axios.post("http://localhost:4000/routingToFront/createUser", newArr)
-        .then(resp => console.log(resp.data))
+        .then(resp =>
+            {
+                console.log(resp.data)
+            }).catch((error) =>
+            {
+                console.log("problem is in add User page")
+            })
+
         history.push("/main/manageUsers/users")
     }
 

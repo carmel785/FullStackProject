@@ -13,6 +13,7 @@ function Users()
     // avoiding infinite loop
     useEffect(()=> {
         console.log("User: "+context)
+        console.log("location state: "+location.state)
         if(location.state !== undefined) // if the the EditUser componnent change the user values so change the users array state.
         {
             axios.get('http://localhost:4000/routingToFront/UsersDB')
@@ -42,20 +43,32 @@ function Users()
                             // created_date: location.state.created_date
                         }
                         axios.put('http://localhost:4000/routingToFront/UsersDB/:'+x._id, newArr)
-                            .then(resp => console.log(resp.data))
+                            .then(resp => {
+                                console.log(resp.data)
+                                console.log("update it please")
+                                axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+                                .then(x=>{setUsers(x.data)})
+                            }).catch((error) =>
+                            {
+                                console.log("problem in update user - user page")
+                            })
+
                     })
-            })
+            }).catch((error)=> console.log("problem in getting users in User page"))
         }
         else
         {//get Rest api request - getting all users data from the WS
             axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
-            .then(x=>{setUsers(x.data)})
+            .then(x=>{setUsers(x.data)}).catch(error=> {console.log("problem in getting all data from ws in Users page")})
         }
     },[])
 
     // i need to get data out of the useEffect cause for the data to show its need another refresh page.
-    axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
-    .then(x=>{setUsers(x.data)})
+    useEffect(()=>{ 
+        axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+        .then(x=>{setUsers(x.data)})
+    },[])
+
 
     const editClick = (name,userName) =>
     {//update user
@@ -67,10 +80,13 @@ function Users()
     const deleteClick = (userName) =>
     {//delete user
         axios.get('http://localhost:4000/routingToFront/deleteUser/'+userName)
-        .then(x=> console.log(x))
-
-        axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
-        .then(x=>{setUsers(x.data)})
+        .then((x)=>{ 
+            console.log(x)
+            axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+            .then(x=>{setUsers(x.data)})
+        }).catch((error)=>{
+            console.log("problem with delete in user page")
+        })
     }
 
     let items = users.map((item,index) => {
@@ -80,9 +96,8 @@ function Users()
             Session Time Out: {item.sessionTimeOut}<br/>
             Created Date: {item.created_date}<br/>
             Permissions: {item.permissions.join(",")}<br/><br/>
-            <input class = "w3-sans-serif" type = "button" value = "Edit" onClick = {()=> editClick(item.fullName,item.userName)} />
-            <input class = "w3-sans-serif" type = "button" value = "Delete" onClick = {()=>deleteClick(item.userName) }/>
-
+            <input className = "w3-sans-serif" type = "button" value = "Edit" onClick = {()=> editClick(item.fullName,item.userName)} />
+            <input className = "w3-sans-serif" type = "button" value = "Delete" onClick = {()=>deleteClick(item.userName) }/>
         </div>
     })    
     return(

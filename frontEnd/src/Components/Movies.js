@@ -5,8 +5,10 @@ const Movies  = () =>
 {
 
     const context = useContext(UserContext)
-    console.log("Movies: "+context)
+    useEffect(() => {
+        console.log("Movies: "+context)
 
+      },[]);
 
     return(
        <div>

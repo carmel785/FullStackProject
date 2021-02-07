@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Login from './Components/Login'
 import CreateAccount from './Components/CreateAccount'
 import NoUser from './Components/NoUser'
@@ -11,8 +11,11 @@ import {AdminContext} from './Components/Contexts'
 const App  = () =>
 {
     const [admin , setAdmin] = useState({})
-    axios.get('http://localhost:4000/routingToFront/AdminJson')
-    .then(x=>{setAdmin(x.data)})
+    useEffect(()=> {
+        axios.get('http://localhost:4000/routingToFront/AdminJson')
+        .then(x=>{setAdmin(x.data)})
+    },[])
+   
 
     return(
         <div>

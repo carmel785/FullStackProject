@@ -45,7 +45,6 @@ function Users()
                         axios.put('http://localhost:4000/routingToFront/UsersDB/:'+x._id, newArr)
                             .then(resp => {
                                 console.log(resp.data)
-                                console.log("update it please")
                                 axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
                                 .then(x=>{setUsers(x.data)})
                             }).catch((error) =>

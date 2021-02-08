@@ -20,22 +20,28 @@ const Main  = () =>
     useEffect(() => { 
         console.log("main: "+location.state)
         setUser(location.state) // save the user from location to state
-        // if(user == admin)
-        
       }, []);
 
       //passing the state with context api to all tabs
 
+        function checkAdmin()
+        {// only Admin can see the User managment tab
+          if(user == admin)
+          {
+             return <li className="w3-bar-item w3-button tablink"><Link to= "/main/manageUsers">Users Management</Link></li>
+          }
+        }
+
     return(
         <div>
-            <ul className="w3-bar w3-blue">
-                <li className="w3-bar-item w3-button tablink"><Link to = "/main/movies" >Movies</Link></li>
-                <li className="w3-bar-item w3-button tablink"><Link to = "/main/subscriptions" >Subscriptions</Link></li>
-                <li className="w3-bar-item w3-button tablink"><Link to= "/main/manageUsers">Users Management</Link></li>
+            <ul className ="w3-bar w3-blue">
+                <li className = "w3-bar-item w3-button tablink"><Link to = "/main/movies" >Movies</Link></li>
+                <li className = "w3-bar-item w3-button tablink"><Link to = "/main/subscriptions" >Subscriptions</Link></li>
+                {checkAdmin()}
                 <li className="w3-bar-item w3-button tablink"><Link to = "/" >Log Out</Link></li>
             </ul>
 
-            <UserContext.Provider value = {user}> 
+            <UserContext.Provider value = {user}>
                 <Route path = "/main/manageUsers" component = {ManageUsers}/>
                 <Route path = "/main/movies" component = {Movies}/>
                 <Route path = "/main/subscriptions" component = {Subscriptions}/>

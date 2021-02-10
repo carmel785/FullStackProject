@@ -71,7 +71,7 @@ router.get('/membersToClient',async function(req, res, next) {
   res.send(membersToWS.data)
 });
 
-//pass members from WS DB to Cinema WS to FrontEnd
+//pass movies from WS DB to Cinema WS to FrontEnd
 router.get('/moviesToClient',async function(req, res, next) {
   var moviesToWS = await axios.get('http://localhost:8000/routingToCinemaWS/moviesToWS')
   res.send(moviesToWS.data)

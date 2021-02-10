@@ -7,7 +7,7 @@ const AddMember  = () =>
     const context = useContext(UserContext)
     useEffect(() => {
         console.log("Add Member: "+context)
-
+        
       },[]);
 
     return(

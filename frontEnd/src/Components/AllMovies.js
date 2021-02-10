@@ -30,7 +30,7 @@ const AllMovies  = () =>
           
           <img src= {item.Image} alt="movies" style= {{display: "inline", height: "250px"}}/>
           <div className="w3-green w3-hover-shadow w3-padding-32 w3-bordered w3-code" style= {{border: "3px solid", 
-        display: "inline-block", width: "750px",   marginLeft: "10px" }}>
+          display: "inline-block", width: "750px",   marginLeft: "10px" }}>
             Subscriptions watched
             <ul>
               <li></li>

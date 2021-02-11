@@ -6,7 +6,7 @@ const AllMembers  = () =>
 {
 
     const [members,setMembers] = useState([])
-    const [movies,setMovie] = useState({})
+    const [subscriptions,setSubscriptions] = useState([])
     const [subClicked, setSubClicked] = useState([])
 
 
@@ -18,7 +18,10 @@ const AllMembers  = () =>
         //getting the members from the Web Service
         axios.get('http://localhost:4000/routingToFront/membersToClient')
           .then(x=>{setMembers(x.data)})
-         
+        //getting the subscriptions from the Web Service(DB)
+        axios.get('http://localhost:4000/routingToFront/subscriptionToClient')
+          .then(x=>{setSubscriptions(x.data)})
+
         //create array of falses the represent the members who clicked on Subscribe for new movie
         let arr = []
         members.map(x=> {
@@ -27,22 +30,7 @@ const AllMembers  = () =>
         setSubClicked(arr)
         
       },[]);
-      
-      // const showSubscribe = () =>
-      // {
-      //   // // console.log(subscribeMovie)
-      //   // if(subscribeMovie === true)
-      //   // {
-      //   //   return <div className="w3-red w3-hover-shadow w3-padding-32 w3-bordered w3-code">
-      //   //   Add new Movie
-      //   //   <ul>
-      //   //     <li>movies</li>
-      //   //   </ul>
-      //   // </div>
-      //   // }
-
-      // }
-
+     
       //adding the index value to the array of members who open the subscribe button
       const Aaa = (index) =>
       {
@@ -56,7 +44,6 @@ const AllMembers  = () =>
 
        const openSubscribe = (index, item) =>
        {
-         setMovie("a")
         //  var arr = subClicked
         //  console.log(subClicked[index])
         //  if(arr[index] == false)
@@ -73,13 +60,36 @@ const AllMembers  = () =>
          console.log(subClicked)
        }
 
-       const subscribeVisible = (index) =>
+      //  const subscribeVisible = (index) =>
+      //  {
+      //     let arr = subClicked
+      //     // console.log(arr)
+      //     // return arr[index]
+      //     return arr[index]
+      //  }
+
+       const subscriptionItems = (index,item) =>
        {
-          let arr = subClicked
-          // console.log(arr)
-          // return arr[index]
-          return arr[index]
+         return subscriptions.map((item2,index2)=>{
+          //  <ul key = {index}>
+
+          if(item._id === item2.MemberId)
+          {
+
+            return item2.Movies.map((item3,index3)=>
+            {
+              // console.log(m.movieName)
+              return <div key = {index3}>
+              <li>{item3.movieName}, {item3.date}</li>
+              </div>
+            })
+          
+          }
+          // </ul>
+         })
        }
+       
+
 
       let items = members.map((item,index)=>
       {
@@ -87,13 +97,16 @@ const AllMembers  = () =>
          <h4>{item.Name}</h4>
          Email: {item.Email}<br/>
          City: {item.City} <br/>
+       
          <input type ="button" value = "Edit" />
          <input type ="button" value = "Delete"/>
          <div className="w3-green w3-hover-shadow w3-padding-32 w3-bordered w3-code" style= {{border: "3px solid"}}>
          Movies watched <br/>
          <input type ="button" value = "Subscribe to new movie" onClick = {() => openSubscribe(index)} />
         <SubscribeMovie index = {index} item = {item} />
-
+        <ul>
+        {subscriptionItems(index,item)}
+        </ul>
          </div>
         </div>
       })

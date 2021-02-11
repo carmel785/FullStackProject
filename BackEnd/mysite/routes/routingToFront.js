@@ -83,4 +83,19 @@ router.get('/subscriptionToClient',async function(req, res, next) {
   res.send(subscriptionToWS.data)
 });
 
+//create subscription with movies(from front End to web service to DB)
+router.post('/addSubscription',async function(req, res, next) {
+  // console.log(req.body)movieName,date,memberId
+  // newSub = {
+    let movieName =  req.body.movieName
+    let date = req.body.date
+    let memberId = req.body.memberId
+  // }
+  await axios.get('http://localhost:8000/routingToCinemaWS/addSubscription/'+movieName+'/'+date+'/'+memberId)
+  .catch((error) =>
+  {
+      console.log("problem is in routingToFront page")
+  })
+});
+
 module.exports = router;

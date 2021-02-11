@@ -25,6 +25,13 @@ router.get('/subscriptionToWS',async function(req, res, next) {
   res.send(subscriptionToWS)
 });
 
+//create subscription from front to DB
+router.get('/addSubscription/:movieName/:date/:memberId',async function(req, res, next) {
+  console.log(req.params.movieName+",   "+req.params.date+",     "+req.params.memberId)
+  var subscriptionToDB = await subscriptionBL.addSubscription(req.params.movieName,req.params.date,req.params.memberId)
+  res.send(subscriptionToDB)
+});
+
 
 
 module.exports = router;

@@ -90,6 +90,7 @@ exports.deleteMemberInDB = function(memberName)
     })
 }
 
+//Add Member in DB
 exports.addMember = async function(name,email,city)
 {
     return new Promise(async function(resolve, reject)

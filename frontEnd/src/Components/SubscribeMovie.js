@@ -1,8 +1,10 @@
 import axios from 'axios'
-import {useContext, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
+import { useForm } from 'react-hook-form';
 
 const SubscribeMovie  = (props) =>
 {
+  const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
   // const [subClicked, setSubClicked] = useState([])
   const [movies,setMovies] = useState([])
@@ -11,6 +13,7 @@ const SubscribeMovie  = (props) =>
     // get all movies
     axios.get('http://localhost:4000/routingToFront/moviesToClient')
     .then(x=>{(setMovies(x.data))}).catch(error => {console.log(error)}) 
+
   },[]);
 
   let items = movies.map((item,index)=>
@@ -18,22 +21,38 @@ const SubscribeMovie  = (props) =>
     return <option value = {item.Name} key= {index} >{item.Name}</option>
   })
 
+
+  const onSubmit = async (data) =>
+  {
+    //movieName,date,memberId
+    const newSub = {
+      movieName: data.movies,
+      date: data.date,
+      memberId: props.item._id
+    }
+    console.log(newSub)
+    axios.post('http://localhost:4000/routingToFront/addSubscription',newSub)
+    .then(resp => console.log(resp)).catch((error) =>
+    {
+        console.log("problem is in subscribeMovie page")
+    })
+    window.location.reload(false);
+
+  }
+ 
     return(
        <div className="w3-red w3-hover-shadow w3-padding-32 w3-bordered w3-code">
           Add new Movie <br/>
-          <select name="movies" id="movies">
-            {items}
-          </select>
-          <input type = "date" name= "date"/><br/>
-          <button>Subscribe</button>
-  
-          <ul>
-            <li>movies</li>
-            <li>index: {props.index}</li>
-            <li>clicked : {props.clicked}</li>
-          </ul>
+          <form onSubmit = {handleSubmit(onSubmit)}>
+            <select name="movies" id="movies" ref={register}>
+              {items}
+            </select>
+            <input type = "date" name= "date" ref={register}/><br/>
+            <input type = "submit" value = "Subscribe" /><br/>
+          </form>
         </div>
     ) 
 }
+
 
 export default SubscribeMovie

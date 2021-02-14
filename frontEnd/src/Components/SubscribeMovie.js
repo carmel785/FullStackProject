@@ -2,25 +2,39 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 import { useForm } from 'react-hook-form';
 
+
 const SubscribeMovie  = (props) =>
 {
   const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
   // const [subClicked, setSubClicked] = useState([])
   const [movies,setMovies] = useState([])
+  const [subMovies,setSubMovies] = useState([])
 
   useEffect(() => {
     // get all movies
     axios.get('http://localhost:4000/routingToFront/moviesToClient')
     .then(x=>{(setMovies(x.data))}).catch(error => {console.log(error)}) 
+    setSubMovies(props.movies)
 
-  },[]);
-
+  },[movies]);
+  
   let items = movies.map((item,index)=>
   {
+    let arrNoSubMovies = movies
+    movies.forEach((item,index) =>
+    {
+      subMovies.forEach(sMovie =>{
+        if(sMovie === item.Name)
+          {
+            arrNoSubMovies.splice(index,1)
+            setMovies(arrNoSubMovies)
+          }
+        })
+    })
     return <option value = {item.Name} key= {index} >{item.Name}</option>
+      
   })
-
 
   const onSubmit = async (data) =>
   {

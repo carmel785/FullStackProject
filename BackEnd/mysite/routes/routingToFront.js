@@ -98,4 +98,19 @@ router.post('/addSubscription',async function(req, res, next) {
   })
 });
 
+//add member from FrontEnd to WS
+router.post('/addMember',async function(req, res, next) {
+  // console.log(req.body)movieName,date,memberId
+  // newSub = {
+    let Name =  req.body.Name
+    let Email = req.body.Email
+    let City = req.body.City
+  // }
+  await axios.get('http://localhost:8000/routingToCinemaWS/addMember/'+Name+'/'+Email+'/'+City)
+  .catch((error) =>
+  {
+      console.log("problem is in routingToFront page")
+  })
+});
+
 module.exports = router;

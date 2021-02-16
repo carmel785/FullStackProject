@@ -2,9 +2,11 @@ import axios from 'axios'
 import {UserContext} from './Contexts'
 import {useContext, useEffect, useState} from 'react'
 import SubscribeMovie from "./SubscribeMovie"
+import { useHistory } from "react-router-dom";
+
 const AllMembers  = () =>
 {
-
+    const history = useHistory();
     const [members,setMembers] = useState([])
     const [subscriptions,setSubscriptions] = useState([])
     const [subClicked, setSubClicked] = useState([])
@@ -53,8 +55,6 @@ const AllMembers  = () =>
            setWatchedMovies(movArr)
         },[subscriptions])
 
-     
-      
 
       function splitMoviesToMembers(memberId)
       {
@@ -86,23 +86,40 @@ const AllMembers  = () =>
        const subscriptionItems = (index,item) =>
        {
          return subscriptions.map((item2,index2)=>{
-          //  <ul key = {index}>
-
           if(item._id === item2.MemberId)
           {
-
             return item2.Movies.map((item3,index3)=>
             {
               return <div key = {index3}>
               <li>{item3.movieName}, {item3.date}</li>
               </div>
-            })
-          
+            })    
           }
-          // </ul>
          })
        }
       
+       //this function I didnt use connector Server 
+       function handleDelete(id)
+       {
+         //delete the member
+          axios.delete("http://localhost:8000/routingToCinemaWS/deleteMember/"+id)
+            .then(resp=> console.log(resp))
+
+        //delete the member's subscriptions
+          axios.delete('http://localhost:8000/routingToCinemaWS/deleteSubscriptions/'+id)
+          .then(resp=> console.log(resp))
+
+        //reload the page because of the changes
+          window.location.reload(false);
+       }
+       
+
+       function handleUpdate(id,name)
+       {
+        history.push("/main/Subscriptions/EditMember/"+id+"/"+name)
+       }
+
+
       let items = members.map((item,index)=>
       {
         let mWatched = []
@@ -111,8 +128,8 @@ const AllMembers  = () =>
          Email: {item.Email}<br/>
          City: {item.City} <br/>
        
-         <input type ="button" value = "Edit" />
-         <input type ="button" value = "Delete"/>
+         <input type ="button" value = "Edit" onClick = {() => handleUpdate(item._id,item.Name)}/>
+         <input type ="button" value = "Delete" onClick ={() => handleDelete(item._id)}/>
          <div className="w3-green w3-hover-shadow w3-padding-32 w3-bordered w3-code" style= {{border: "3px solid"}}>
          Movies watched <br/>
          <input type ="button" value = "Subscribe to new movie" onClick = {() => openSubscribe(index)} />

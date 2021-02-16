@@ -42,7 +42,7 @@ function Users()
                             updateS: location.state.updateS,
                             // created_date: location.state.created_date
                         }
-                        axios.put('http://localhost:4000/routingToFront/UsersDB/:'+x._id, newArr)
+                        axios.put('http://localhost:4000/routingToFront/UsersDB/'+x._id, newArr)
                             .then(resp => {
                                 console.log(resp.data)
                                 axios.get('http://localhost:4000/routingToFront/UsersDBFullData')

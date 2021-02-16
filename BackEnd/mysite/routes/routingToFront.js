@@ -113,4 +113,10 @@ router.post('/addMember',async function(req, res, next) {
   })
 });
 
+//this the I jumped over this port cause I dont need the request to pass between 3 servers
+// //delete member from front in DB(pass request)
+// router.delete('/deleteMember/:id',async function(req, res, next) {
+//   await axios.delete('http://localhost:8000/routingToCinemaWS/deleteMember/'+req.params.id)
+// });
+
 module.exports = router;

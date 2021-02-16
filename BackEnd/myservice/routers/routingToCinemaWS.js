@@ -42,4 +42,25 @@ router.get('/addMember/:Name/:Email/:City',async function(req, res, next) {
   res.send(memberToDB)
 });
 
+//delete member from front in DB
+router.delete('/deleteMember/:id',async function(req, res, next) {
+  console.log(req.params.id)
+ await membersBL.deleteMemberInDB(req.params.id)
+});
+
+//Update member from front in DB
+router.put('/editMember/:id',async function(req, res, next) {
+  console.log(req.params.id)
+  console.log(req.body)
+  res.send(req.body)
+
+ await membersBL.editMemberInDB(req.body,req.params.id)
+});
+
+//delete subscriptions from front in DB
+router.delete('/deleteSubscriptions/:id',async function(req, res, next) {
+  console.log("from subscriptions  "+req.params.id)
+ await subscriptionBL.deleteSubscriptionsFromDB(req.params.id)
+});
+
 module.exports = router;

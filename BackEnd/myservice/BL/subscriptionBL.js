@@ -58,7 +58,7 @@ exports.addSubscription = function(movieName,date,memberId)
     
 }
 
-//Delete Member
+//Delete Subscription
 exports.deleteSubscriptionsFromDB = function(id)
 {
     return new Promise(function(resolve,reject)
@@ -73,6 +73,30 @@ exports.deleteSubscriptionsFromDB = function(id)
                     else
                     {
                         resolve("Subscription Deleted")
+                    }
+                })
+    })
+}
+
+//update Subscription
+exports.editSubscription = function(newMember, id)
+{
+    return new Promise(function(resolve,reject)
+    {
+        Subscription.findByIdAndUpdate(id
+            ,{
+                MemberId : newMember.memberId,
+                Movies : newMember.movies
+
+            },function(err,m)
+                {
+                    if(err)
+                    {
+                        reject(err)
+                    }
+                    else
+                    {
+                        resolve(m)
                     }
                 })
     })

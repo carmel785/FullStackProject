@@ -100,3 +100,19 @@ exports.editMovieInDB = function(movie,id)
                 })
     })
 }
+
+exports.deleteMovie = function(id)
+{
+    
+        Movie.findByIdAndDelete(id,function(err)
+        {
+            if(err)
+            {
+                console.log(err)
+            }
+            else
+            {
+                console.log("Movie Deleted !")
+            }
+        }) 
+}

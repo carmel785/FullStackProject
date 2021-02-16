@@ -10,7 +10,6 @@ const AllMovies  = () =>
     const [movies, setMovies] = useState([])
     const [subscriptions,setSubscriptions] = useState([])
     const [members,setMembers] = useState([])
-    const [watchedMovies, setWatchedMovies] = useState([])
     let history = useHistory();
 
     const context = useContext(UserContext)
@@ -58,12 +57,46 @@ const AllMovies  = () =>
        history.push("/main/movies/EditMovie/"+id+"/"+name)
       }
 
-      function handleDelete(id)
+      function handleDelete(id, name)
       {
         //delete the movie
-
-        //delete the movie's subscriptions
+        axios.delete('http://localhost:8000/routingToCinemaWS/deleteMovie/'+id)
         
+        //delete the movie's subscriptions(only the movie)==> (update)
+        //the code if's - if the movies fount out in one of the subscribers pass only the other movies of the same subscriber
+        let arrOfNotSubscribe = []
+        let mId = ""
+        let subId = ""
+        subscriptions.forEach(s=>
+          {
+            s.Movies.forEach(m=>
+              {
+                if(m.movieName === name)
+                {
+                  s.Movies.forEach(x =>
+                    {
+                      if(x.movieName !== name)
+                      {
+                        mId = s.MemberId
+                        subId = s._id
+                        arrOfNotSubscribe.push({movieName: x.movieName, date: x.date})
+                      }
+                    })
+                  
+                }
+              })
+          })
+         
+        const unsubscribeMovie = {
+          movies: arrOfNotSubscribe,
+          memberId: mId
+        }
+        console.log(arrOfNotSubscribe)
+        axios.put('http://localhost:8000/routingToCinemaWS/editSubscription/'+subId, unsubscribeMovie)
+        .then(resp=> console.log(resp))
+
+         //reload the page because of the changes
+         window.location.reload(false);
       }
 
       
@@ -94,7 +127,7 @@ const AllMovies  = () =>
           </div>
           <br/><br/>
           <input type ="button" value = "Edit" onClick = {()=> handleEdit(item._id,item.Name)}/>
-          <input type ="button" value = "Delete" onClick = {()=> handleDelete(item._id)}/>
+          <input type ="button" value = "Delete" onClick = {()=> handleDelete(item._id, item.Name)}/>
 
         </div> 
       })

@@ -79,4 +79,15 @@ router.put('/editMovie/:id',async function(req, res, next) {
  await moviesBL.editMovieInDB(req.body,req.params.id)
 });
 
+//delete Movie from front in DB
+router.delete('/deleteMovie/:id',async function(req, res, next) {
+  console.log("from deleteMovie  "+req.params.id)
+  await moviesBL.deleteMovie(req.params.id)  
+});
+
+//delete specific movie from subscriptions database from front in DB
+router.put('/editSubscription/:id',async function(req, res, next) {
+ await subscriptionBL.editSubscription(req.body,req.params.id)
+});
+
 module.exports = router;

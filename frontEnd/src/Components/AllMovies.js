@@ -1,5 +1,5 @@
 import {UserContext} from './Contexts'
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState, useRef} from 'react'
 import axios from 'axios'
 import {BrowserRouter as Router, Link , Switch, Route} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,7 @@ const AllMovies  = () =>
     const [subscriptions,setSubscriptions] = useState([])
     const [members,setMembers] = useState([])
     let history = useHistory();
+    const find = useRef(null)
 
     const context = useContext(UserContext)
     
@@ -99,6 +100,20 @@ const AllMovies  = () =>
          window.location.reload(false);
       }
 
+      const findMovie = () =>
+      {
+        // console.log(find.current.value)
+        let arr = []
+        movies.forEach(x=>
+          {
+            var n = x.Name.startsWith(find.current.value)
+            if(n === true)
+            {
+              arr.push(x)
+            }
+          })
+          setMovies(arr)
+      }
       
       const getOnlyYear = (date) =>
       {
@@ -135,8 +150,8 @@ const AllMovies  = () =>
       
     return(
        <div >
-       Find Movie: <input type = "text" name = "find" />
-       <input type ="button" value = "Find"/> <br/><br/>
+       Find Movie: <input type = "text" name = "find" ref = {find}/>
+       <input type ="button" value = "Find" onClick = {findMovie}/> <br/><br/>
        {items}
        </div>
     ) 

@@ -17,8 +17,8 @@ const Subscriptions  = () =>
     return(
       <div>
       <ul className="w3-bar w3-black">
-          <li className="w3-bar-item w3-button tablink"><Link to = "/main/Subscriptions/AllMembers">All Members</Link></li>
-          <li className="w3-bar-item w3-button tablink"><Link to = "/main/Subscriptions/AddMember" >Add Member</Link></li>
+          <li className="w3-bar-item w3-button tablink"><Link to = "/main/subscriptions/AllMembers">All Members</Link></li>
+          <li className="w3-bar-item w3-button tablink"><Link to = "/main/subscriptions/AddMember" >Add Member</Link></li>
       </ul>
       
       <Switch>

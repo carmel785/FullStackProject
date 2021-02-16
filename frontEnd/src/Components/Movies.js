@@ -2,6 +2,7 @@ import {UserContext} from './Contexts'
 import {useContext, useEffect} from 'react'
 import AllMovies from './AllMovies'
 import AddMovie from './AddMovie'
+import EditMovie from './EditMovie'
 import {BrowserRouter as Router, Link , Switch, Route} from 'react-router-dom'
 
 const Movies  = () =>
@@ -23,6 +24,8 @@ const Movies  = () =>
       <Switch>
           <Route path = "/main/movies/AllMovies" component = {AllMovies}/>
           <Route path = "/main/movies/AddMovie" component = {AddMovie}/>
+          <Route path = "/main/movies/EditMovie/:id/:name" component = {EditMovie}/>
+
       </Switch>
 
       </div>

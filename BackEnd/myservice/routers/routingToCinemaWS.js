@@ -70,5 +70,13 @@ router.post('/addMovie',async function(req, res, next) {
   var memberToDB = await moviesBL.addMovieToDB(req.body)
 });
 
+//Update movie from front in DB
+router.put('/editMovie/:id',async function(req, res, next) {
+  console.log(req.params.id)
+  console.log(req.body)
+  res.send(req.body)
+
+ await moviesBL.editMovieInDB(req.body,req.params.id)
+});
 
 module.exports = router;

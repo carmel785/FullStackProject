@@ -2,6 +2,7 @@ import {UserContext} from './Contexts'
 import {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
 import {BrowserRouter as Router, Link , Switch, Route} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import AllMembers from './AllMembers'
 
 const AllMovies  = () =>
@@ -10,6 +11,7 @@ const AllMovies  = () =>
     const [subscriptions,setSubscriptions] = useState([])
     const [members,setMembers] = useState([])
     const [watchedMovies, setWatchedMovies] = useState([])
+    let history = useHistory();
 
     const context = useContext(UserContext)
     
@@ -51,6 +53,19 @@ const AllMovies  = () =>
       }
      
 
+      function handleEdit(id,name)
+      {
+       history.push("/main/movies/EditMovie/"+id+"/"+name)
+      }
+
+      function handleDelete(id)
+      {
+        //delete the movie
+
+        //delete the movie's subscriptions
+        
+      }
+
       
       const getOnlyYear = (date) =>
       {
@@ -78,8 +93,8 @@ const AllMovies  = () =>
             </Switch>
           </div>
           <br/><br/>
-          <input type ="button" value = "Edit" />
-          <input type ="button" value = "Delete"/>
+          <input type ="button" value = "Edit" onClick = {()=> handleEdit(item._id,item.Name)}/>
+          <input type ="button" value = "Delete" onClick = {()=> handleDelete(item._id)}/>
 
         </div> 
       })

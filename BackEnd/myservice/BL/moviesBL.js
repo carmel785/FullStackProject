@@ -75,16 +75,18 @@ exports.addMovieToDB = function(movie)
     
 }
 
-exports.editMovieInDB = function(movie,preMovie)
+exports.editMovieInDB = function(movie,id)
 {
     return new Promise(function(resolve,reject)
     {
-        Movie.update({Name: preMovie}
-            ,{
-                Name: movie.name,
-                Genres: movie.genres,
-                Image: movie.image,
-                Premiered: movie.premiered
+        // Movie.update({Name: preMovie}
+        Movie.findByIdAndUpdate(id
+            ,{ 
+                Name: movie.Name,
+                Genres: movie.Genres,
+                Image: movie.Image,
+                Premiered: movie.Premiered
+
              },function(err,m)
                 {
                     if(err)

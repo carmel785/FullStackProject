@@ -54,10 +54,10 @@ exports.addMovieToDB = function(movie)
     return new Promise(function(resolve,reject)
     {
         const m = new Movie({
-            Name: movie.name,
-            Genres: movie.genres,
-            Image:  movie.image,
-            Premiered:  movie.premiered
+            Name: movie.Name,
+            Genres: movie.Genres,
+            Image:  movie.Image,
+            Premiered:  movie.Premiered
         })
     
         m.save(function(err)

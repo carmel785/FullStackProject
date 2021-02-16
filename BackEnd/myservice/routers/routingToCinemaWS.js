@@ -63,4 +63,12 @@ router.delete('/deleteSubscriptions/:id',async function(req, res, next) {
  await subscriptionBL.deleteSubscriptionsFromDB(req.params.id)
 });
 
+
+//add movie from FrontEnd to DB
+router.post('/addMovie',async function(req, res, next) {
+  res.send(req.body)
+  var memberToDB = await moviesBL.addMovieToDB(req.body)
+});
+
+
 module.exports = router;

@@ -12,6 +12,8 @@ const AllMovies  = () =>
     let history = useHistory();
     const find = useRef(null)
     const [updateAxios,setUpdateAxios] = useState(false)
+    const [deleteAxios,setDeleteAxios] = useState(false)
+
 
     
     useEffect(async () => {
@@ -29,16 +31,22 @@ const AllMovies  = () =>
       //permissions:
       axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
       .then((allUsers)=>{ 
-          return allUsers.data.forEach(user =>
+           allUsers.data.forEach(user =>
                 {
                   if(user.userName === sessionStorage["user"])
                   {
-                      return user.permissions.forEach(p=>
+                       user.permissions.forEach(p=>
                           {
                               if(p === "Update Movie")
                               {
                                 setUpdateAxios(true)
                               }
+
+                              if(p === "Delete Movies")
+                              {
+                                setDeleteAxios(true)
+                              }
+                              
                               
                           })
                   }
@@ -81,6 +89,12 @@ const AllMovies  = () =>
 
       function handleDelete(id, name)
       {
+        if(deleteAxios === false)
+        {
+          history.push("/main/NoPermission")
+        }
+        else
+        {
         //delete the movie
         axios.delete('http://localhost:8000/routingToCinemaWS/deleteMovie/'+id)
         
@@ -119,6 +133,8 @@ const AllMovies  = () =>
 
          //reload the page because of the changes
          window.location.reload(false);
+        }
+
       }
 
       const findMovie = () =>

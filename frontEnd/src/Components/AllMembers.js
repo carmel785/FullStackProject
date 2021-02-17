@@ -10,6 +10,8 @@ const AllMembers  = () =>
     const [subscriptions,setSubscriptions] = useState([])
     const [subClicked, setSubClicked] = useState([])
     const [watchedMovies, setWatchedMovies] = useState([])
+    const [updateAxios,setUpdateAxios] = useState(false)
+    const [deleteAxios,setDeleteAxios] = useState(false)
 
    
     useEffect(() => {
@@ -21,6 +23,29 @@ const AllMembers  = () =>
         //getting the subscriptions from the Web Service(DB)
         axios.get('http://localhost:4000/routingToFront/subscriptionToClient')
           .then(x=>{setSubscriptions(x.data)})
+
+        //permissions:
+        axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+        .then((allUsers)=>{ 
+            return allUsers.data.forEach(user =>
+                  {
+                    if(user.userName === sessionStorage["user"])
+                    {
+                        return user.permissions.forEach(p=>
+                            {
+                              console.log(p)
+                                if(p === "Delete Subscriptions")
+                                {
+                                  setUpdateAxios(true)
+                                }
+                                if(p === "Delete Subscriptions")
+                                {
+                                  setDeleteAxios(true)
+                                }
+                            })
+                    }
+                  })
+          })
 
       },[]);
 
@@ -96,24 +121,38 @@ const AllMembers  = () =>
        //this function I didnt use connector Server 
        function handleDelete(id)
        {
-         //delete the member
+        if(deleteAxios === false)
+        {
+          history.push("/main/NoPermission")
+        }
+        else
+        {
+          console.log(deleteAxios)
+          //delete the member
           axios.delete("http://localhost:8000/routingToCinemaWS/deleteMember/"+id)
-            .then(resp=> console.log(resp))
+          .then(resp=> console.log(resp))
 
-        //delete the member's subscriptions
+          //delete the member's subscriptions
           axios.delete('http://localhost:8000/routingToCinemaWS/deleteSubscriptions/'+id)
           .then(resp=> console.log(resp))
 
-        //reload the page because of the changes
+          //reload the page because of the changes
           window.location.reload(false);
+        }
        }
        
 
        function handleUpdate(id,name)
        {
-        history.push("/main/Subscriptions/EditMember/"+id+"/"+name)
+        if(updateAxios === true)
+        {
+          history.push("/main/Subscriptions/EditMember/"+id+"/"+name)
+        }
+        else
+        {
+          history.push("/main/NoPermission")
+        }
        }
-
 
       let items = members.map((item,index)=>
       {

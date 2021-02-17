@@ -1,8 +1,7 @@
 import axios from 'axios'
-import {useRef, useContext, useEffect} from 'react';
+import {useRef} from 'react';
 import {useHistory} from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import {UserContext} from './Contexts'
 
 
 const AddUser  = () =>
@@ -11,12 +10,7 @@ const AddUser  = () =>
     const checkboxMov = useRef(null);
     let history = useHistory();
     const { register , handleSubmit, errors } = useForm(); // initialize the hook
-    const context = useContext(UserContext)
-
-    useEffect(()=> {
-        console.log("Add User: "+context)
-    },[])
-
+   
     function subFunc(checked) {
         if(checked === true)
         {

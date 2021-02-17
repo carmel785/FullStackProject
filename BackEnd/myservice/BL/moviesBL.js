@@ -54,10 +54,10 @@ exports.addMovieToDB = function(movie)
     return new Promise(function(resolve,reject)
     {
         const m = new Movie({
-            Name: movie.name,
-            Genres: movie.genres,
-            Image:  movie.image,
-            Premiered:  movie.premiered
+            Name: movie.Name,
+            Genres: movie.Genres,
+            Image:  movie.Image,
+            Premiered:  movie.Premiered
         })
     
         m.save(function(err)
@@ -75,16 +75,18 @@ exports.addMovieToDB = function(movie)
     
 }
 
-exports.editMovieInDB = function(movie,preMovie)
+exports.editMovieInDB = function(movie,id)
 {
     return new Promise(function(resolve,reject)
     {
-        Movie.update({Name: preMovie}
-            ,{
-                Name: movie.name,
-                Genres: movie.genres,
-                Image: movie.image,
-                Premiered: movie.premiered
+        // Movie.update({Name: preMovie}
+        Movie.findByIdAndUpdate(id
+            ,{ 
+                Name: movie.Name,
+                Genres: movie.Genres,
+                Image: movie.Image,
+                Premiered: movie.Premiered
+
              },function(err,m)
                 {
                     if(err)
@@ -97,4 +99,20 @@ exports.editMovieInDB = function(movie,preMovie)
                     }
                 })
     })
+}
+
+exports.deleteMovie = function(id)
+{
+    
+        Movie.findByIdAndDelete(id,function(err)
+        {
+            if(err)
+            {
+                console.log(err)
+            }
+            else
+            {
+                console.log("Movie Deleted !")
+            }
+        }) 
 }

@@ -22,7 +22,7 @@ exports.addAllMembers = async function()
                 }
                 else
                 {
-                    resolve('created !')
+                    resolve('All the Members from the cloud Data copied to DB !')
                 }
             })
         })
@@ -48,15 +48,17 @@ exports.getAllMembers = function()
     
 }
 //Edit Member
-exports.editMemberInDB = function(memberName,email,city,preName)
+// exports.editMemberInDB = function(memberName,email,city,preName)
+exports.editMemberInDB = function(newMember, id)
 {
     return new Promise(function(resolve,reject)
     {
-        Member.update({Name: preName}
+        //Member.update({Name: preName}
+        Member.findByIdAndUpdate(id
             ,{
-                Name: memberName,
-                Email: email,
-                City: city
+                Name: newMember.Name,
+                Email: newMember.Email,
+                City: newMember.City
              },function(err,m)
                 {
                     if(err)
@@ -71,11 +73,12 @@ exports.editMemberInDB = function(memberName,email,city,preName)
     })
 }
 //Delete Member
-exports.deleteMemberInDB = function(memberName)
+exports.deleteMemberInDB = function(id)
 {
     return new Promise(function(resolve,reject)
     {
-        Member.findOneAndDelete({Name: memberName}
+        // Member.findOneAndDelete({Name: memberName}
+            Member.findByIdAndDelete(id
             ,function(err)
                 {
                     if(err)
@@ -84,12 +87,13 @@ exports.deleteMemberInDB = function(memberName)
                     }
                     else
                     {
-                        resolve("Deleted")
+                        resolve("Member Deleted")
                     }
                 })
     })
 }
 
+//Add Member in DB
 exports.addMember = async function(name,email,city)
 {
     return new Promise(async function(resolve, reject)
@@ -108,7 +112,7 @@ exports.addMember = async function(name,email,city)
             }
             else
             {
-                resolve('created !')
+                resolve('Member created !')
             }
         })
        

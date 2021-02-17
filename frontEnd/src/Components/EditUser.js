@@ -1,4 +1,4 @@
-import {useRef, useContext, useEffect, useState} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,7 +7,6 @@ import {
     useHistory
   } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import {UserContext} from './Contexts'
 
 const EditUser = () =>
 {
@@ -17,10 +16,8 @@ const EditUser = () =>
     let history = useHistory();
     const [date, setDate] = useState("")
     const { register , handleSubmit, errors } = useForm(); // initialize the hook
-    const context = useContext(UserContext)
 
     useEffect(()=> {
-        console.log("EditUser: "+context)
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1; 

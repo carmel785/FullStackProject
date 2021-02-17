@@ -11,10 +11,10 @@ const Login  = () =>
     const onSubmit = async (data) =>
     {
       let users = await axios.get('http://localhost:4000/routingToFront/UsersDB')
-        var userData = users.data.filter(u => u.User === data.user)
-        if(userData === "")
+      var userData = users.data.filter(u => u.User === data.user)
+        if(typeof(userData)[0] === "undefined") //for any other option then a user
         {
-            console.log("this user is not exiest")
+            console.log("this user is not exist")
             history.push("/noUser");
         }
         else
@@ -23,15 +23,15 @@ const Login  = () =>
             if(x.Password === data.pwd)
             {
               console.log("Loggin in..")
-              history.push({pathname: "/main",state: x.User});
+              sessionStorage["user"] = x.User
+              history.push("/main");
             }
             else
             {
-              console.log("this user is not exiest")
+              console.log("this user is not exist")
               history.push("/noUser");
             }
-          })
-          
+          })          
         }
     }
 

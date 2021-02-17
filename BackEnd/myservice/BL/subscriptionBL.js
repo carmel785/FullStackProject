@@ -57,3 +57,47 @@ exports.addSubscription = function(movieName,date,memberId)
     })
     
 }
+
+//Delete Subscription
+exports.deleteSubscriptionsFromDB = function(id)
+{
+    return new Promise(function(resolve,reject)
+    {
+        Subscription.findOneAndDelete({MemberId: id}
+            ,function(err)
+                {
+                    if(err)
+                    {
+                        reject(err)
+                    }
+                    else
+                    {
+                        resolve("Subscription Deleted")
+                    }
+                })
+    })
+}
+
+//update Subscription
+exports.editSubscription = function(newMember, id)
+{
+    return new Promise(function(resolve,reject)
+    {
+        Subscription.findByIdAndUpdate(id
+            ,{
+                MemberId : newMember.memberId,
+                Movies : newMember.movies
+
+            },function(err,m)
+                {
+                    if(err)
+                    {
+                        reject(err)
+                    }
+                    else
+                    {
+                        resolve(m)
+                    }
+                })
+    })
+}

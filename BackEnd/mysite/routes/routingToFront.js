@@ -71,7 +71,7 @@ router.get('/membersToClient',async function(req, res, next) {
   res.send(membersToWS.data)
 });
 
-//pass members from WS DB to Cinema WS to FrontEnd
+//pass movies from WS DB to Cinema WS to FrontEnd
 router.get('/moviesToClient',async function(req, res, next) {
   var moviesToWS = await axios.get('http://localhost:8000/routingToCinemaWS/moviesToWS')
   res.send(moviesToWS.data)
@@ -82,5 +82,41 @@ router.get('/subscriptionToClient',async function(req, res, next) {
   var subscriptionToWS = await axios.get('http://localhost:8000/routingToCinemaWS/subscriptionToWS')
   res.send(subscriptionToWS.data)
 });
+
+//create subscription with movies(from front End to web service to DB)
+router.post('/addSubscription',async function(req, res, next) {
+  // console.log(req.body)movieName,date,memberId
+  // newSub = {
+    let movieName =  req.body.movieName
+    let date = req.body.date
+    let memberId = req.body.memberId
+  // }
+  await axios.get('http://localhost:8000/routingToCinemaWS/addSubscription/'+movieName+'/'+date+'/'+memberId)
+  .catch((error) =>
+  {
+      console.log("problem is in routingToFront page")
+  })
+});
+
+//add member from FrontEnd to WS
+router.post('/addMember',async function(req, res, next) {
+  // console.log(req.body)movieName,date,memberId
+  // newSub = {
+    let Name =  req.body.Name
+    let Email = req.body.Email
+    let City = req.body.City
+  // }
+  await axios.get('http://localhost:8000/routingToCinemaWS/addMember/'+Name+'/'+Email+'/'+City)
+  .catch((error) =>
+  {
+      console.log("problem is in routingToFront page")
+  })
+});
+
+//this the I jumped over this port cause I dont need the request to pass between 3 servers
+// //delete member from front in DB(pass request)
+// router.delete('/deleteMember/:id',async function(req, res, next) {
+//   await axios.delete('http://localhost:8000/routingToCinemaWS/deleteMember/'+req.params.id)
+// });
 
 module.exports = router;

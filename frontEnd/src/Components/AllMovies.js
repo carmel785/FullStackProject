@@ -1,5 +1,4 @@
-import {UserContext} from './Contexts'
-import {useContext, useEffect, useState, useRef} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import axios from 'axios'
 import {BrowserRouter as Router, Link , Switch, Route} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
@@ -12,12 +11,10 @@ const AllMovies  = () =>
     const [members,setMembers] = useState([])
     let history = useHistory();
     const find = useRef(null)
+    const [updateAxios,setUpdateAxios] = useState(false)
 
-    const context = useContext(UserContext)
     
-    useEffect(() => {
-        console.log("All Movies: "+context)
-
+    useEffect(async () => {
         axios.get('http://localhost:4000/routingToFront/moviesToClient')
         .then(x=>{(setMovies(x.data))}).catch(error => {console.log(error)}) 
 
@@ -29,6 +26,24 @@ const AllMovies  = () =>
       axios.get('http://localhost:4000/routingToFront/membersToClient')
       .then(x=>{setMembers(x.data)})
 
+      //permissions:
+      axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+      .then((allUsers)=>{ 
+          return allUsers.data.forEach(user =>
+                {
+                  if(user.userName === sessionStorage["user"])
+                  {
+                      return user.permissions.forEach(p=>
+                          {
+                              if(p === "Update Movie")
+                              {
+                                setUpdateAxios(true)
+                              }
+                              
+                          })
+                  }
+                })
+        })
       },[]);
 
 
@@ -51,11 +66,17 @@ const AllMovies  = () =>
               })
           })
       }
-     
 
       function handleEdit(id,name)
       {
-       history.push("/main/movies/EditMovie/"+id+"/"+name)
+        if(updateAxios === true)
+        {
+          history.push("/main/movies/EditMovie/"+id+"/"+name)
+        }
+        else
+        {
+          history.push("/main/NoPermission")
+        }
       }
 
       function handleDelete(id, name)

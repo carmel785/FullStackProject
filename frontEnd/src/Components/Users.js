@@ -1,18 +1,15 @@
 import axios from 'axios'
-import { useState, useContext, useEffect} from 'react';
+import { useState, useEffect} from 'react';
 import { useHistory, useLocation } from "react-router-dom";
-import {UserContext} from './Contexts'
 
 function Users()
 {
     const [users, setUsers] = useState([])
     let history = useHistory();
-    const context = useContext(UserContext)
     let location = useLocation()
     
     // avoiding infinite loop
     useEffect(()=> {
-        console.log("User: "+context)
         console.log("location state: "+location.state)
         if(location.state !== undefined) // if the the EditUser componnent change the user values so change the users array state.
         {

@@ -1,5 +1,3 @@
-import {UserContext} from './Contexts'
-import {useContext, useEffect} from 'react'
 import AllMembers from './AllMembers'
 import AddMember from './AddMember'
 import EditMember from './EditMember'
@@ -7,13 +5,6 @@ import {BrowserRouter as Router, Link , Switch, Route} from 'react-router-dom'
 
 const Subscriptions  = () =>
 {
-
-    const context = useContext(UserContext)
-    useEffect(() => {
-        console.log("Subscriptions: "+context)
-
-      },[]);
-
     return(
       <div>
       <ul className="w3-bar w3-black">

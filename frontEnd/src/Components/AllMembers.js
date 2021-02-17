@@ -1,6 +1,5 @@
 import axios from 'axios'
-import {UserContext} from './Contexts'
-import {useContext, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import SubscribeMovie from "./SubscribeMovie"
 import { useHistory } from "react-router-dom";
 
@@ -12,11 +11,8 @@ const AllMembers  = () =>
     const [subClicked, setSubClicked] = useState([])
     const [watchedMovies, setWatchedMovies] = useState([])
 
-    const context = useContext(UserContext)
    
     useEffect(() => {
-        console.log("All Members: "+context)
-
         //getting the members from the Web Service
         axios.get('http://localhost:4000/routingToFront/membersToClient')
           .then(x=>{setMembers(x.data)})
@@ -26,7 +22,6 @@ const AllMembers  = () =>
         axios.get('http://localhost:4000/routingToFront/subscriptionToClient')
           .then(x=>{setSubscriptions(x.data)})
 
-        
       },[]);
 
 

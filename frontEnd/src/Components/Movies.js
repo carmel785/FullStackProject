@@ -1,18 +1,38 @@
-import {UserContext} from './Contexts'
-import {useContext, useEffect} from 'react'
+import axios from 'axios'
 import AllMovies from './AllMovies'
 import AddMovie from './AddMovie'
 import EditMovie from './EditMovie'
 import {BrowserRouter as Router, Link , Switch, Route} from 'react-router-dom'
+import {useState} from 'react'
 
 const Movies  = () =>
 {
+    const [viewAxios,setViewAxios] = useState(false)
+    const [createAxios,setCreateAxios] = useState(false)
 
-    const context = useContext(UserContext)
-    useEffect(() => {
-        console.log("Movies: "+context)
-
-      },[]);
+    function CheckPermissions()
+    { 
+       axios.get('http://localhost:4000/routingToFront/UsersDBFullData')
+        .then((allUsers)=>{ 
+            return allUsers.data.forEach(user =>
+                  {
+                    if(user.userName === sessionStorage["user"])
+                    {
+                        return user.permissions.forEach(p=>
+                            {
+                                if(p === "View Movies")
+                                {
+                                    setViewAxios(true)
+                                }
+                                if(p === "Create Movies")
+                                {
+                                    setCreateAxios(true)
+                                }
+                            })
+                    }
+                  })
+        })
+    }
 
     return(
       <div>
@@ -22,8 +42,19 @@ const Movies  = () =>
       </ul>
       
       <Switch>
-          <Route path = "/main/movies/AllMovies" component = {AllMovies}/>
-          <Route path = "/main/movies/AddMovie" component = {AddMovie}/>
+          {CheckPermissions()}
+          {viewAxios ? <Route path = "/main/movies/AllMovies" component = {AllMovies}/> 
+                : <div className="w3-red w3-hover-shadow w3-padding-32 w3-bordered w3-code">
+                    <h2>Sorry you dont have any Movie Permission</h2>
+                  </div>
+                }
+
+          {createAxios ? <Route path = "/main/movies/AddMovie" component = {AddMovie}/>
+                : <div className="w3-red w3-hover-shadow w3-padding-32 w3-bordered w3-code">
+                    <h2>Sorry you dont have Add Movie Permission</h2>
+                  </div>
+                }
+
           <Route path = "/main/movies/EditMovie/:id/:name" component = {EditMovie}/>
 
       </Switch>

@@ -1,5 +1,3 @@
-import {UserContext} from './Contexts'
-import {useContext, useEffect} from 'react'
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
 import axios from 'axios'
@@ -8,12 +6,6 @@ const AddMovie  = () =>
 {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
     const history = useHistory();
-
-    const context = useContext(UserContext)
-    useEffect(() => {
-        console.log("Add Movie: "+context)
-        
-      },[]);
 
       const onSubmit = async (data) =>
       {
